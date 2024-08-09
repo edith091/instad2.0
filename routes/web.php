@@ -131,9 +131,9 @@ Route::prefix('admin')->group(function () {
 
 /*Utilisateur*/
 
-Route::get('/home',[HomeController::class, 'index'])->name('home');
+Route::get('/home',[HomeController::class, 'index'])->name('home');//
 //utilisateur creation d'equipements
-Route::get('/declare-equipment', [EquipementController::class, 'create'])->name('declare-equipment');
+Route::get('/declare-equipment', [EquipementController::class, 'create'])->name('declare-equipment');//
 Route::post('/declare-equipment/store', [EquipementController::class, 'store'])->name('declare-equipment.store');
 Route::get('/equipement/fields', [EquipementController::class, 'getEquipmentFields'])->name('equipement.fields');// Exemple de route pour l'index des équipements utilisateur
 Route::get('user/equipements-index', [EquipementController::class, 'index'])->name('user.equipements-index'); 
@@ -145,7 +145,6 @@ Route::delete('/equipement/{equipement}', [EquipementController::class, 'destroy
 //utilisateur creation de la demande
 // Routes pour les demandes
 Route::get('/demandes', [DemandeController::class, 'index'])->name('demandes.index');
-Route::get('/demandes/create', [DemandeController::class, 'create'])->name('demandes.create');
 Route::post('/demandes', [DemandeController::class, 'store'])->name('demandes.store');
 Route::get('/demandes/{demande}/edit', [DemandeController::class, 'edit'])->name('demandes.edit');
 Route::put('/demandes/{demande}', [DemandeController::class, 'update'])->name('demandes.update');

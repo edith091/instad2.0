@@ -65,8 +65,7 @@ class EquipementController extends Controller
             ->where('user_id', $userId)
             ->leftJoin('type_equipements', 'equipements.idTypeEquipement', '=', 'type_equipements.idTypeEquipement')
             ->select('equipements.id', 'equipements.nomM', 'equipements.codification', 'equipements.etat', 'equipements.date_acquisition', 'type_equipements.nom as type_nom')
-            ->paginate(10); // Utilisation de paginate au lieu de get pour la pagination
-
+            ->paginate(10);
         return view('user.equipements-index', compact('equipements', 'typesEquipement'));
     }
 

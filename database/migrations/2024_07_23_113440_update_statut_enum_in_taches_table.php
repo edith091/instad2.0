@@ -12,7 +12,6 @@ class UpdateStatutEnumInTachesTable extends Migration
             $table->enum('statut', ['en attente', 'en cours', 'terminée', 'annulée', 'autre_valeur'])->change();
         });
     }
-
     public function down()
     {
         Schema::table('taches', function (Blueprint $table) {
