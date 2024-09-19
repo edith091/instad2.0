@@ -46,12 +46,12 @@
                         <span class="hide-menu">Gérer les Équipements</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-dark" href="{{-- {{ route('admin.reports') }} --}}" aria-expanded="false">
+                {{-- <li class="nav-item">
+                    <a class="nav-link waves-effect waves-dark" href="{{ route('admin.reports') }}" aria-expanded="false">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <span class="hide-menu">Rapports</span>
                     </a>
-                </li>
+                </li> --}}
               {{--   <li class="nav-item">
                     <a class="nav-link waves-effect waves-dark" href="{{ route('admin.feedback') }}" aria-expanded="false">
                         <i class="nav-icon fas fa-comment-dots"></i>

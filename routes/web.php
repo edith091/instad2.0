@@ -8,6 +8,7 @@ use App\Http\Controllers\EquipementController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\DeclarerEquipementController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TechnicianController;
@@ -41,7 +42,7 @@ require __DIR__.'/auth.php';
 
 
 /*Admin*/
-Route::middleware(['admin', 'verified'])->prefix('admin')->group(function () {
+Route::middleware(['admin'])->prefix('admin')->group(function () {
 Route::get('/dashboard', [AdminController::class, 'dashboard'])
 ->name('admin_dashboard');
 
@@ -127,8 +128,12 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('demandes', AdminDemandeController::class);
     Route::post('demandes/assign/{id}', [AdminDemandeController::class, 'assign'])->name('admin.demandes.assign');
+    
 
-Route::get('/home',[HomeController::class, 'index'])->name('home');//
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/home',[HomeController::class, 'index'])->name('home');
+    });
+//
 //utilisateur creation d'equipements
 Route::get('/declare-equipment', [EquipementController::class, 'create'])->name('declare-equipment');//
 Route::post('/declare-equipment/store', [EquipementController::class, 'store'])->name('declare-equipment.store');
@@ -148,6 +153,9 @@ Route::put('/demandes/{demande}', [DemandeController::class, 'update'])->name('d
 Route::delete('/demandes/{demande}', [DemandeController::class, 'destroy'])->name('demandes.destroy');
 Route::get('demandes/create', [DemandeController::class, 'create'])->name('user.faire-demande');
 Route::post('demandes', [DemandeController::class, 'store'])->name('demandes.store');
+Route::get('/demandes/{id}/rapport', [DemandeController::class, 'showRapportForm'])->name('demandes.rapport');
+Route::post('/demandes/{id}/rapport', [DemandeController::class, 'storeRapport'])->name('demandes.storeRapport');
+
 
 
 // Routes pour les techniciens
@@ -178,10 +186,25 @@ Route::post('/technicien/taches/{id}/declare-indisponible', [TechnicianControlle
         Route::post('rapports', [RapportController::class, 'store'])->name('rapports.store');
     });
     
+    Route::middleware('auth')->group(function () {
+        Route::get('pdf/view/{id}', [PDFController::class, 'view'])->name('pdf.view');
+    });
 
 
 
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/technicien/tache/{id}/declaredatedebut', [TechnicianController::class, 'declareDateDebut'])->name('technicien.declaredatedebut');
+        Route::get('/technicien/tache/{id}/declaredatefin', [TechnicianController::class, 'declareDateFin'])->name('technicien.declaredatefin');
+    });
+    
 // Routes pour les utilisateurs
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 });
+
+
+
+
+// routes/web.php
+

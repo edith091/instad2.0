@@ -1,4 +1,5 @@
 <?php
+// app/Models/Demande.php
 
 namespace App\Models;
 
@@ -8,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Demande extends Model
 {
     use HasFactory;
-
 
     protected $fillable = [
         'user_id',
@@ -34,7 +34,7 @@ class Demande extends Model
 
     public function taches()
     {
-        return $this->hasMany(Tache::class, 'idDemande');
+        return $this->hasMany(Tache::class, 'demande_id');
     }
 
     public function technicien()
@@ -56,17 +56,14 @@ class Demande extends Model
             $nextId = $latestDemand ? $latestDemand->id + 1 : 1;
             $demande->codification = 'DEM' . str_pad($nextId, 5, '0', STR_PAD_LEFT);
         });
+
+        static::updating(function ($demande) {
+            // Mettre à jour le statut des tâches associées si le motif d'indisponibilité est renseigné
+            if ($demande->isDirty('motif_indisponibilite')) {
+                foreach ($demande->taches as $tache) {
+                    $tache->updateStatut();
+                }
+            }
+        });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -39,7 +39,7 @@
             <div class="col-lg-6 col-md-8 col-sm-10 mx-auto">
                 <div class="auth-form">
                     <div class="brand-logo mb-4">
-                        <img src="build/img/instad1.PNG" alt="logo">
+                        <img src={{ asset('build/img/instad1.PNG') }} alt="logo">
                     </div>
                     <h4 class="text-center mb-4">Bienvenue de retour !</h4>
                     <form method="POST" action="{{ route('login') }}">

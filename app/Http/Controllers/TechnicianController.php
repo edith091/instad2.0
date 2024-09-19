@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Notification;
 class TechnicianController extends Controller
 {
     // Affichage de la page d'accueil du technicien
+   
+
     public function index()
     {
         return view('tech.technicienhome');
@@ -39,7 +41,7 @@ class TechnicianController extends Controller
     {
         $user = Auth::user();
         $taches = Tache::where('technicien_id', $user->id)
-                       ->whereIn('statut', ['en cours', 'en attente', 'terminée'])
+                       ->whereIn('statut', ['en cours', 'en attente', 'terminée','annulée'])
                        ->with(['demande.user.direction', 'rapports']) // Inclure la relation 'rapports'
                        ->paginate(10);
     
@@ -106,6 +108,43 @@ class TechnicianController extends Controller
     
         return redirect()->route('my-tasks')->with('success', 'Tâche annulée avec succès. Vous êtes maintenant disponible.');
     } */
+
+
+
+    public function declareDateDebut($id)
+{
+    // Fetch the task by its ID
+    $tache = Tache::findOrFail($id);
+
+    // Ensure that the task belongs to the authenticated technician
+    if ($tache->technicien_id != auth()->id()) {
+        return redirect()->route('my-tasks')->with('error', 'Vous ne pouvez pas déclarer cette tâche.');
+    }
+
+    // Update the start date of the task
+    $tache->date_debut = now();
+    $tache->save();
+
+    return redirect()->route('my-tasks')->with('success', 'Date de début déclarée avec succès.');
+}
+
+public function declareDateFin($id)
+{
+    // Fetch the task by its ID
+    $tache = Tache::findOrFail($id);
+
+    // Ensure that the task belongs to the authenticated technician
+    if ($tache->technicien_id != auth()->id()) {
+        return redirect()->route('my-tasks')->with('error', 'Vous ne pouvez pas déclarer cette tâche.');
+    }
+
+    // Update the end date of the task
+    $tache->date_fin = now();
+    $tache->save();
+
+    return redirect()->route('my-tasks')->with('success', 'Date de fin déclarée avec succès.');
+}
+
     
     public function declareIndisponible($id)
 {

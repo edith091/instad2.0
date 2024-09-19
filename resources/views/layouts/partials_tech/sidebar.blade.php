@@ -44,12 +44,12 @@
                         <p>Mettre à Jour le Statut</p>
                     </a>
                 </li> --}}
-                <li class="nav-item">
+               {{--  <li class="nav-item">
                     <a href="{{ route('rapports.create') }}" class="nav-link">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>Rapports</p>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a href="feedback.html" class="nav-link">
                         <i class="nav-icon fas fa-comments"></i>

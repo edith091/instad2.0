@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 
 return [
 
@@ -209,7 +211,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
-    ])->toArray(),
+        // Autres alias...
 
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+    ])->toArray(),
 ];

@@ -71,12 +71,6 @@ class AdminDemandeController extends Controller
         return redirect()->route('admin.demandes.index')->with('success', 'Demande créée avec succès.');
     }
 
-   /*  public function edit($demande)
-    {
-        $demande = Demande::findOrFail($demande,'id'); // Charger la demande à éditer
-        $equipements = Equipement::all(); // Par exemple, charger les équipements pour le formulaire
-        return view('user.demande_edit', compact('demande', 'equipements'));
-    } */
     public function edit($id)
 {
     $demande = Demande::findOrFail($id); // Charger la demande à éditer
@@ -117,35 +111,6 @@ class AdminDemandeController extends Controller
         $demande->delete();
         return redirect()->route('admin.demandes.index')->with('success', 'Demande supprimée avec succès.');
     }
-/* 
-    public function assign(Request $request, $id)
-    {
-        // Check if the request has already been assigned
-        $check = Tache::where('demande_id', $id)->exists();
-       /*  dd($check) */
-        /* if ($check) {
-            return redirect()->route('admin.demandes.index')->with('success', 'Demande déjà affectée');
-        } */
-    
-        // Retrieve the request
-        /* $demande = Demande::findOrFail($id); */
-    
-        // Update the request status and assign the technician
-       /*  $demande->statut = 'affecté';
-        $demande->technicien_id = $request->input('technicien_id'); // Ensure 'technicien_id' matches the foreign key in your 'demandes' table
-        $demande->save(); */
-    
-        // Create a new task associated with the request
-       /*  $tache = new Tache;
-        $tache->demande_id = $id;
-        $tache->user_id = $demande->user_id;
-        $tache->technicien_id = $request->input('technicien_id');
-        $tache->statut = 'en cours';
-        $tache->save(); */
-    
-        // Redirect to the requests list with a success message
-  /*       return redirect()->route('admin.demandes.index')->with('success', 'Demande affectée avec succès.');
-    } */
     
     public function assign(Request $request, $id)
     {
@@ -187,26 +152,29 @@ class AdminDemandeController extends Controller
         return redirect()->route('admin.demandes.index')->with('success', 'Demande affectée avec succès');
     }
 
-    public function declareIndisponibilite(Request $request, $id)
+// Méthode pour déclarer l'indisponibilité
+// Exemple de mise à jour du statut
+public function declareIndisponibilite(Request $request, $id)
 {
-    // Valider les données du formulaire
     $request->validate([
-        'motif' => 'required|string|max:255',
+        'motif_indisponibilite' => 'required|string|max:255',
     ]);
 
-    // Récupérer la demande
     $demande = Demande::findOrFail($id);
-
-    // Mettre à jour le statut de la demande et ajouter le motif d'indisponibilité
-    $demande->statut = 'non traité';
-    $demande->motif_indisponibilite = $request->input('motif');
+    $demande->motif_indisponibilite = $request->input('motif_indisponibilite');
+    $demande->statut = 'non traité'; // Assurez-vous que 'non traité' est une valeur valide
     $demande->save();
 
-    // Rediriger avec un message de succès
-    return redirect()->route('admin.demandes.index')->with('success', 'Demande déclarée indisponible avec succès.');
+    // Mettre à jour le statut des tâches associées
+    $taches = Tache::where('demande_id', $id)->get();
+    foreach ($taches as $tache) {
+        $tache->statut = 'annulée'; // Assurez-vous que 'annulé' est une valeur valide
+        $tache->save();
+    }
+
+    return redirect()->route('admin.demandes.index')->with('success', 'Indisponibilité enregistrée avec succès.');
 }
 
-    
     
 
 }

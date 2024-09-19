@@ -14,6 +14,7 @@ class CreateTachesTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('technicien_id')->nullable()->constrained('users')->onDelete('set null');
             $table->enum('statut', ['en attente', 'en cours', 'terminée', 'annulée', 'autre_valeur'])->default('en cours');
+            $table->text('rapport_utilisateur')->nullable();
             $table->text('feedback')->nullable();
             $table->timestamp('date_debut')->nullable();
             $table->timestamp('date_fin')->nullable();

@@ -17,6 +17,7 @@ class Tache extends Model
         'technicien_id',
         'statut',
         'feedback',
+        'rapport_utilisateur',
         'date_debut',
         'date_fin',
     ];
@@ -46,8 +47,18 @@ class Tache extends Model
     }
 
     public function rapports()
-{
-    return $this->hasMany(Rapport::class);
-}
+    {
+        return $this->hasMany(Rapport::class);
+    }
 
+    /**
+     * Update the task status based on the associated demand's `motif_indisponibilite`.
+     */
+    public function updateStatut()
+    {
+        if ($this->demande && $this->demande->motif_indisponibilite) {
+            $this->statut = 'annulé'; // ou autre valeur selon vos besoins
+            $this->save();
+        }
+    }
 }

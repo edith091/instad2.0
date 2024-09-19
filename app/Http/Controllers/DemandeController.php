@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Demande;
 use App\Models\User;
+use App\Models\Tache;
 use App\Models\Equipement;
+use App\Models\TypeEquipement;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -33,15 +35,38 @@ class DemandeController extends Controller
 
         return view('user.demande-index', compact('demandes'));
     }
+    public function showRapportForm($id)
+    {
+        $demande = Demande::findOrFail($id);
+        // Logique pour afficher le formulaire de rapport
+        return view('user.rapport', compact('demande'));
+    }
+    public function storeRapport(Request $request, $id)
+    {
+        $tache = Tache::where('demande_id',$id)->first(); 
+        if($tache){
+            // Valider les données
+            $request->validate([
+                'rapport_utilisateur' => 'required|string',
+            ]);
+            $tache->rapport_utilisateur = $request->input('rapport_utilisateur');
+            $tache->save();
+
+            return redirect()->route('demandes.index')->with('success', 'Rapport enregistré avec succès.'); 
+        }
+        
+    }
 
     public function create()
     {
         $user = auth()->user(); // Récupérer l'utilisateur connecté
+        $typesEquipement = TypeEquipement::all();
         $equipements = Equipement::where('user_id', $user->id)->get(); // Récupérer les équipements de l'utilisateur connecté
-        return view('user.faire-demande', compact('equipements'));
+        return view('user.faire-demande', compact('equipements', 'typesEquipement'));
+        
     }
 
-
+/* 
     public function store(Request $request)
     {
         $request->validate([
@@ -64,8 +89,32 @@ class DemandeController extends Controller
         $demande->save();
         
         return redirect()->route('demandes.index')->with('success', 'Demande créée avec succès.');
+    } */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'equipement_id' => 'required|exists:equipements,id',
+            'description' => 'required|string|max:255',
+            'priorite' => 'required|in:gênant,bloquant',
+            'date_demande' => 'required',
+        ]);
+    
+        $demande = new Demande();
+        $demande->user_id = Auth::id(); // ID de l'utilisateur connecté
+        $demande->equipement_id = $request->input('equipement_id');
+        $demande->description = $request->input('description');
+        $demande->date_demande = $request->input('date_demande');
+        $demande->priorite = $request->input('priorite');
+        $demande->statut = 'en cours';
+        $demande->save(); // Enregistrer la demande d'abord pour générer l'ID
+    
+        // Mettre à jour la codification avec l'ID généré
+        $demande->codification = 'DEM00' . $demande->id;
+        $demande->save();
+    
+        return redirect()->route('demandes.index')->with('success', 'Demande créée avec succès.');
     }
-
+    
 
     public function edit($id)
     {

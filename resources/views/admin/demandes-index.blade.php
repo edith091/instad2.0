@@ -80,30 +80,13 @@
                 <div class="container">
                     <div class="card table-container">
                         <div class="card-body">
-                            <!-- Search Bar -->
-                           {{--  <div class="row search-bar">
-                                <div class="col-md-4">
-                                    <form action="{{ route('admin.demandes.index') }}" method="GET">
-                                        <div class="input-group">
-                                            <input type="text" name="search" class="form-control" placeholder="Rechercher...">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div> --}}
-
-                            <!-- Table -->
                             <table class="table table-bordered table-hover" id="demandesTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">N°</th>
                                         <th>Utilisateur</th>
                                         <th>Équipement</th>
-                                        <th>Description</th>
+                                        {{-- <th>Description</th> --}}
                                         <th>Date de la demande</th>
                                         <th>Priorité</th>
                                         <th>Statut</th>
@@ -116,7 +99,7 @@
                                         <td>DEM00{{ $loop->index+1 }}</td>
                                         <td>{{ $demande->user->nom }} {{ $demande->user->prenom }}</td>
                                         <td>{{ $demande->equipement->nomM }} - {{ $demande->equipement->codification }}</td>
-                                        <td>{{ $demande->description }}</td>
+                                        {{-- <td>{{ $demande->description }}</td> --}}
                                         <td>{{ $demande->date_demande }}</td>
                                         <td>{{ $demande->priorite }}</td>
                                         <td>
@@ -221,6 +204,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <a href="{{ route('pdf.view', $demande->id) }}" class="btn btn-primary mb-3">
+                                                <i class="fas fa-file-pdf"></i> Télécharger PDF
+                                            </a>
+                                            
                                         </td>
                                     </tr>
                                     @endforeach
