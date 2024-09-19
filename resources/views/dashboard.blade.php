@@ -4,7 +4,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{$totalDemande}}</h3>
                     <p>Demandes Total</p>
                 </div>
                 <div class="icon">
@@ -63,7 +63,7 @@
                             <div class="tab-content p-0">
 
                                 <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                                    <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                  <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -253,4 +253,34 @@
                 </section>
 
             </div>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var labels = @json($demande->pluck('nom_equipement'));
+        var data = @json($demande->pluck('total_demandes'));
+        var ctx = document.getElementById('revenue-chart-canvas').getContext('2d');
+
+        var demandesChart = new Chart(ctx, {
+            type: 'line', // Utiliser 'line' pour une courbe
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nombre de demandes par équipement',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: true // Remplir sous la courbe
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 @endsection

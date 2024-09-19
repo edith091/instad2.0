@@ -1,155 +1,286 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.partials.frontends.tech')
+@section('content')
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{$totalDemande}}</h3>
+                    <p>Demandes Total</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <p>Bounce Rate</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Mirrored from adminlte.io/themes/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jul 2024 15:56:09 GMT -->
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Technicien | Dashboard</title>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>44</h3>
+                            <p>User Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                    </div>
+                </div>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>65</h3>
+                            <p>Unique Visitors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+            <div class="row">
 
-<link rel="stylesheet" href="../../../code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+                <section class="col-lg-7 connectedSortable">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Vue D'ensemble des demandes traitées
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content p-0">
 
-<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+                                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                                  <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-<link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+                    <div class="card direct-chat direct-chat-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Avis Clients</h3>
+                            <div class="card-tools">
+                                <span title="3 New Messages" class="badge badge-primary">3</span>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
 
-<link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+                        <div class="card-body">
 
-<link rel="stylesheet" href="dist/css/adminlte.min2167.css?v=3.2.0">
+                            <div class="direct-chat-messages">
 
-<link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+                                <div class="direct-chat-msg">
+                                    <div class="direct-chat-infos clearfix">
+                                        <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                        <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                                    </div>
 
-<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+                                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
 
-<link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-<script nonce="d9f7e1c7-1ea1-4f0f-b89f-0780ffed27a6">try{(function(w,d){!function(U,V,W,X){U[W]=U[W]||{};U[W].executed=[];U.zaraz={deferred:[],listeners:[]};U.zaraz._v="5705";U.zaraz.q=[];U.zaraz._f=function(Y){return async function(){var Z=Array.prototype.slice.call(arguments);U.zaraz.q.push({m:Y,a:Z})}};for(const $ of["track","set","debug"])U.zaraz[$]=U.zaraz._f($);U.zaraz.init=()=>{var ba=V.getElementsByTagName(X)[0],bb=V.createElement(X),bc=V.getElementsByTagName("title")[0];bc&&(U[W].t=V.getElementsByTagName("title")[0].text);U[W].x=Math.random();U[W].w=U.screen.width;U[W].h=U.screen.height;U[W].j=U.innerHeight;U[W].e=U.innerWidth;U[W].l=U.location.href;U[W].r=V.referrer;U[W].k=U.screen.colorDepth;U[W].n=V.characterSet;U[W].o=(new Date).getTimezoneOffset();if(U.dataLayer)for(const bg of Object.entries(Object.entries(dataLayer).reduce(((bh,bi)=>({...bh[1],...bi[1]})),{})))zaraz.set(bg[0],bg[1],{scope:"page"});U[W].q=[];for(;U.zaraz.q.length;){const bj=U.zaraz.q.shift();U[W].q.push(bj)}bb.defer=!0;for(const bk of[localStorage,sessionStorage])Object.keys(bk||{}).filter((bm=>bm.startsWith("_zaraz_"))).forEach((bl=>{try{U[W]["z_"+bl.slice(7)]=JSON.parse(bk.getItem(bl))}catch{U[W]["z_"+bl.slice(7)]=bk.getItem(bl)}}));bb.referrerPolicy="origin";bb.src="../../cdn-cgi/zaraz/sd0d9.js?z="+btoa(encodeURIComponent(JSON.stringify(U[W])));ba.parentNode.insertBefore(bb,ba)};["complete","interactive"].includes(V.readyState)?zaraz.init():U.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,"zarazData","script");})(window,document)}catch(e){throw fetch("/cdn-cgi/zaraz/t"),e;};</script></head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+                                    <div class="direct-chat-text">
+                                        Is this template really for free? That's unbelievable!
+                                    </div>
 
-<div class="preloader flex-column justify-content-center align-items-center">
-<img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-</div>
-@include('layouts.partials_tech.navbar')
-
-<div class="content-wrapper">
-@include('layouts.partials_tech.sidebar')
-<div class="content-header">
-<div class="container-fluid">
-<div class="row mb-2">
-<div class="col-sm-6">
-<h1 class="m-0">Dashboard</h1>
-</div>
-<div class="col-sm-6">
-<ol class="breadcrumb float-sm-right">
-<li class="breadcrumb-item"><a href="#">Home</a></li>
-<li class="breadcrumb-item active">Dashboard v1</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
+                                </div>
 
 
-<section class="content">
-<div class="container-fluid">
+                                <div class="direct-chat-msg right">
+                                    <div class="direct-chat-infos clearfix">
+                                        <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                        <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                                    </div>
 
-<div class="row">
-<div class="col-lg-3 col-6">
+                                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
 
-<div class="small-box bg-info">
-<div class="inner">
-<h3>150</h3>
-<p>New Orders</p>
-</div>
-<div class="icon">
-<i class="ion ion-bag"></i>
-</div>
-<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-</div>
-</div>
+                                    <div class="direct-chat-text">
+                                        You better believe it!
+                                    </div>
 
-<div class="col-lg-3 col-6">
+                                </div>
 
-<div class="small-box bg-success">
-<div class="inner">
-<h3>53<sup style="font-size: 20px">%</sup></h3>
-<p>Bounce Rate</p>
-</div>
-<div class="icon">
-<i class="ion ion-stats-bars"></i>
-</div>
-<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-</div>
-</div>
 
-<div class="col-lg-3 col-6">
+                                <div class="direct-chat-msg">
+                                    <div class="direct-chat-infos clearfix">
+                                        <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                        <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
+                                    </div>
 
-<div class="small-box bg-warning">
-<div class="inner">
-<h3>44</h3>
-<p>User Registrations</p>
-</div>
-<div class="icon">
-<i class="ion ion-person-add"></i>
-</div>
-<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-</div>
-</div>
+                                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
 
-<div class="col-lg-3 col-6">
+                                    <div class="direct-chat-text">
+                                        Working with AdminLTE on a great new app! Wanna join?
+                                    </div>
 
-<div class="small-box bg-danger">
-<div class="inner">
-<h3>65</h3>
-<p>Unique Visitors</p>
-</div>
-<div class="icon">
-<i class="ion ion-pie-graph"></i>
-</div>
-<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-</div>
-</div>
+                                </div>
 
-</div>
-<aside class="control-sidebar control-sidebar-dark">
-</aside>
-</div>
 
-<script src="plugins/jquery/jquery.min.js"></script>
+                                <div class="direct-chat-msg right">
+                                    <div class="direct-chat-infos clearfix">
+                                        <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                        <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
+                                    </div>
 
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
+                                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
 
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                                    <div class="direct-chat-text">
+                                        I would love to.
+                                    </div>
 
-<script src="plugins/chart.js/Chart.min.js"></script>
+                                </div>
+                            </div>
 
-<script src="plugins/sparklines/sparkline.js"></script>
 
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+                            <div class="direct-chat-contacts">
 
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+                            </div>
 
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
+                        </div>
 
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+                        <div class="card-footer">
+                            <form action="#" method="post">
+                                <div class="input-group">
+                                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary">Send</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
 
-<script src="plugins/summernote/summernote-bs4.min.js"></script>
+                    </div>
+                </section>
 
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
-<script src="dist/js/adminlte2167.js?v=3.2.0"></script>
+                <section class="col-lg-5 connectedSortable">
 
-<script src="dist/js/pages/dashboard.js"></script>
-</body>
+                    <div class="card bg-gradient-primary">
+                        <div class="card-header border-0">
+                            <h3 class="card-title">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                Visitors
+                            </h3>
 
-<!-- Mirrored from adminlte.io/themes/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jul 2024 15:56:41 GMT -->
-</html>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
+                                <i class="far fa-calendar-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div id="world-map" style="height: 250px; width: 100%;"></div>
+                        </div>
+
+                        <div class="card-footer bg-transparent">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <div id="sparkline-1"></div>
+                                    <div class="text-white">Visitors</div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div id="sparkline-2"></div>
+                                    <div class="text-white">Online</div>
+                                </div>
+
+                                <div class="col-4 text-center">
+                                    <div id="sparkline-3"></div>
+                                    <div class="text-white">Sales</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="card bg-gradient-success">
+                        <div class="card-header border-0">
+                            <h3 class="card-title">
+                                <i class="far fa-calendar-alt"></i>
+                                Calendar
+                            </h3>
+
+                            <div class="card-tools">
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                        <i class="fas fa-bars"></i>
+                                    </button>
+                                    <div class="dropdown-menu" role="menu">
+                                        <a href="#" class="dropdown-item">Add new event</a>
+                                        <a href="#" class="dropdown-item">Clear events</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item">View calendar</a>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body pt-0">
+                            <div id="calendar" style="width: 100%"></div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var labels = @json($demande->pluck('nom_equipement'));
+        var data = @json($demande->pluck('total_demandes'));
+        var ctx = document.getElementById('revenue-chart-canvas').getContext('2d');
+
+        var demandesChart = new Chart(ctx, {
+            type: 'line', // Utiliser 'line' pour une courbe
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nombre de demandes par équipement',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: true // Remplir sous la courbe
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+@endsection

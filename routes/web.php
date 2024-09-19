@@ -10,6 +10,8 @@ use App\Http\Controllers\DeclarerEquipementController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TechnicianController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -125,11 +127,6 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('demandes', AdminDemandeController::class);
     Route::post('demandes/assign/{id}', [AdminDemandeController::class, 'assign'])->name('admin.demandes.assign');
-    
-
-
-
-/*Utilisateur*/
 
 Route::get('/home',[HomeController::class, 'index'])->name('home');//
 //utilisateur creation d'equipements
@@ -152,8 +149,6 @@ Route::delete('/demandes/{demande}', [DemandeController::class, 'destroy'])->nam
 Route::get('demandes/create', [DemandeController::class, 'create'])->name('user.faire-demande');
 Route::post('demandes', [DemandeController::class, 'store'])->name('demandes.store');
 
-use App\Http\Controllers\TechnicianController;
-use App\Http\Controllers\UserController;
 
 // Routes pour les techniciens
 Route::middleware(['auth', 'verified'])->group(function () {
