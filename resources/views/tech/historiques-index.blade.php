@@ -67,7 +67,7 @@
                     <div class="card table-container">
                         <div class="card-body">
                             <!-- Table -->
-                            <table class="table table-bordered table-hover" id="example2">
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">N°</th>
@@ -75,14 +75,8 @@
                                         <th>Statut</th>
                                         <th>Date de Début</th>
                                         <th>Date de Fin</th>
-                                        <th>Date d'Affectation</th>
                                         <th>Utilisateur</th>
                                         <th>Direction</th>
-                                        <th>Bureau</th>
-                                        @if ($taches->whereNotNull('feedback')->count() > 0)
-                                            <th>Feedback</th>
-                                        @endif
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,54 +98,35 @@
                                                 @case('annulée')
                                                     <span class="badge badge-info">{{ $tache->statut }}</span>
                                             @endswitch
-                                        </td> 
-                                        <td>{{ \Carbon\Carbon::parse($tache->date_debut)->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($tache->date_fin)->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($tache->date_affectation)->format('d/m/Y') }}</td>
+                                        </td>
+                                        
+                                        <!-- Formulaire pour la date de début -->
+                                        <td>
+                                            <form action="{{ route('taches.updateDateDebut', $tache->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="date" name="date_debut" value="{{ $tache->date_debut ? \Carbon\Carbon::parse($tache->date_debut)->format('Y-m-d') : '' }}" class="form-control" required>
+                                                <button type="submit" class="btn btn-sm btn-success mt-2">Enregistrer</button>
+                                            </form>
+                                        </td>
+                                        
+                                        <!-- Formulaire pour la date de fin -->
+                                        <td>
+                                            <form action="{{ route('taches.updateDateFin', $tache->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="date" name="date_fin" value="{{ $tache->date_fin ? \Carbon\Carbon::parse($tache->date_fin)->format('Y-m-d') : '' }}" class="form-control" required>
+                                                <button type="submit" class="btn btn-sm btn-primary mt-2">Enregistrer</button>
+                                            </form>
+                                        </td>
+                                        
                                         <td>{{ $tache->demande->user->prenom }} {{ $tache->demande->user->nom }}</td>
                                         <td>{{ $tache->demande->user->direction->nom }}</td>
-                                        <td>{{ $tache->demande->user->bureau }}</td>
-                                        @if ($taches->whereNotNull('feedback')->count() > 0)
-                                            <td>{{ $tache->feedback ?? '' }}</td>
-                                        @endif
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="Actions">
-                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#dateDebutModal" data-id="{{ $tache->id }}">Date de début</button>
-                                                <a href="{{ route('technicien.declaredatefin', $tache->id) }}" class="btn btn-sm btn-primary">Date de Fin</a>
-                                            </div>
-                                        </td>
-                                                                            <!-- Modal pour définir la date de début -->
-                                    <div class="modal fade" id="dateDebutModal" tabindex="-1" aria-labelledby="dateDebutModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="dateDebutModalLabel">Définir la Date de Début</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="{{ route('technicien.declaredatedebut',$tache->id) }}" method="POST">
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="tache_id" id="tache_id" value="">
-                                                        <div class="form-group">
-                                                            <label for="date_debut">Date de Début</label>
-                                                            <input type="date" name="date_debut" id="date_debut" class="form-control" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            
 
                             <!-- Pagination -->
                             <div class="pagination-container">
@@ -231,19 +206,6 @@
         });
     });
 </script>
-<script>
-    $(document).ready(function() {
-        $('#dateDebutModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget); // Le bouton qui a déclenché le modal
-            var tacheId = button.data('id'); // Extraire l'ID de la tâche du bouton
-            
-            // Mettre à jour le champ caché avec l'ID de la tâche
-            var modal = $(this);
-            modal.find('#tache_id').val(tacheId);
-        });
-    });
-</script>
-
 
 </body>
 </html>

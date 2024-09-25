@@ -203,6 +203,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 });
 
+Route::patch('/taches/{tache}/date-debut', [TechnicianController::class, 'updateDateDebut'])->name('taches.updateDateDebut');
+Route::patch('/taches/{tache}/date-fin', [TechnicianController::class, 'updateDateFin'])->name('taches.updateDateFin');
 
 
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Notifications\TechnicienIndisponible;
 use Illuminate\Support\Facades\Notification;
+use Carbon\Carbon;
 
 class TechnicianController extends Controller
 {
@@ -79,36 +80,39 @@ class TechnicianController extends Controller
     
         return redirect()->route('my-tasks')->with('success', 'Tâche mise à jour avec succès.');
     }
+  // Mise à jour de la date de début
+  public function updateDateDebut(Request $request, $id)
+  {
+      $tache = Tache::findOrFail($id);
 
-    // Déclaration d'indisponibilité du technicien
-   /*  public function declareIndisponible($id)
-    {
-        $tache = Tache::findOrFail($id);
-    
-        if ($tache->technicien_id != auth()->id()) {
-            return redirect()->route('my-tasks')->with('error', 'Vous ne pouvez pas signaler cette tâche.');
-        }
-    
-        $tache->statut = 'annulée';
-        $tache->save();
-    
-        $technicien = auth()->user();
-        $technicien->disponible = true;
-        $technicien->save();
-    
-        // Recherchez un administrateur dans la table admins
-        $admin = Admin::first(); // Vous pouvez utiliser un critère plus spécifique si nécessaire
-    
-        if ($admin) {
-            Notification::route('mail', $admin->email)
-                        ->notify(new TechnicienIndisponible($tache));
-        } else {
-            return redirect()->route('my-tasks')->with('error', 'Aucun administrateur trouvé pour envoyer la notification.');
-        }
-    
-        return redirect()->route('my-tasks')->with('success', 'Tâche annulée avec succès. Vous êtes maintenant disponible.');
-    } */
+      // Validation de la date
+      $request->validate([
+          'date_debut' => 'required|date',
+      ]);
 
+      // Mise à jour de la date de début
+      $tache->date_debut = Carbon::parse($request->input('date_debut'));
+      $tache->save();
+
+      return redirect()->back()->with('success', 'Date de début mise à jour avec succès.');
+  }
+
+  // Mise à jour de la date de fin
+  public function updateDateFin(Request $request, $id)
+  {
+      $tache = Tache::findOrFail($id);
+
+      // Validation de la date
+      $request->validate([
+          'date_fin' => 'required|date|after_or_equal:date_debut',
+      ]);
+
+      // Mise à jour de la date de fin
+      $tache->date_fin = Carbon::parse($request->input('date_fin'));
+      $tache->save();
+
+      return redirect()->back()->with('success', 'Date de fin mise à jour avec succès.');
+  }
 
 
     public function declareDateDebut($id)
